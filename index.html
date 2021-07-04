@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <!-- Load TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
+
+
+    <!-- Place your code in the script tag below. You can also use an external .js file -->
+    <script>
+        async function load_model(){
+            tf.setBackend('webgl')
+            const model = await tf.loadLayersModel('pix2pix_model/generator_model_tfjs/model.json')
+            for(var layer of model.layers){
+                layer.trainable = false
+            }
+            model.summary()
+            await model.save("indexeddb://pix2pix_faces")
+            return model;
+        }
+        load_model()
+    </script>
+  </head>
+
+  <body>
+  </body>
+</html>
